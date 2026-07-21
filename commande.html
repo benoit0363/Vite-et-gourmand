@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Commande | Vite & Gourmand</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome pour les icônes -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></link>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        h1, h2, h3, h4, .logo-font { font-family: 'Comfortaa', cursive; }
+        
+        /* Ajustement pour cacher le spinner des champs number si besoin plus tard */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- BARRE DE NAVIGATION -->
+    <header class="bg-[#9eb2a0] text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-2 rounded-full">
+                    <i class="fa-solid fa-leaf text-xl text-white"></i>
+                </div>
+                <a href="index.html" class="block">
+                    <span class="text-2xl font-bold tracking-wide logo-font">Vite & <span class="text-yellow-100">Gourmand</span></span>
+                </a>
+            </div>
+            
+            <!-- Liens de navigation -->
+            <nav class="flex items-center gap-6 text-sm font-semibold">
+                <a href="index.html" class="hover:text-yellow-100 transition-colors hidden sm:inline-block">Accueil</a>
+                <a href="menus.html" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Retour aux menus
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-10 w-full">
+        
+        <div class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 logo-font">Finaliser ma réservation</h1>
+            <p class="text-gray-500 mt-2">Veuillez remplir vos coordonnées pour valider votre commande.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            <!-- COLONNE GAUCHE : FORMULAIRE (Prend 8 colonnes sur 12) -->
+            <div class="lg:col-span-8">
+                <form id="orderForm" onsubmit="envoyerCommande(event)" class="space-y-8">
+                    
+                    <!-- Bloc 1 : Coordonnées -->
+                    <section class="bg-white p-8 rounded-3xl shadow-sm border border-gray-150">
+                        <h4 class="text-xl font-bold text-gray-800 logo-font mb-6 flex items-center gap-3">
+                            <span class="bg-[#9eb2a0]/10 text-[#9eb2a0] w-10 h-10 rounded-full flex items-center justify-center"><i class="fa-solid fa-user"></i></span>
+                            Vos coordonnées
+                        </h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="client-nom" class="block text-sm font-semibold text-gray-700 mb-2">Nom Complet <span class="text-red-500">*</span></label>
+                                <input type="text" id="client-nom" placeholder="Ex: Jean Dupont" required class="w-full border border-gray-200 rounded-xl px-4 py-3 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                            </div>
+                            <div>
+                                <label for="client-email" class="block text-sm font-semibold text-gray-700 mb-2">Adresse Email <span class="text-red-500">*</span></label>
+                                <input type="email" id="client-email" placeholder="votre@email.com" required class="w-full border border-gray-200 rounded-xl px-4 py-3 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="client-gsm" class="block text-sm font-semibold text-gray-700 mb-2">Téléphone <span class="text-red-500">*</span></label>
+                                <input type="tel" id="client-gsm" placeholder="06..." required class="w-full border border-gray-200 rounded-xl px-4 py-3 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Bloc 2 : Récupération -->
+                    <section class="bg-white p-8 rounded-3xl shadow-sm border border-gray-150">
+                        <h4 class="text-xl font-bold text-gray-800 logo-font mb-6 flex items-center gap-3">
+                            <span class="bg-[#9eb2a0]/10 text-[#9eb2a0] w-10 h-10 rounded-full flex items-center justify-center"><i class="fa-solid fa-truck-fast"></i></span>
+                            Récupération de la commande
+                        </h4>
+
+                        <div class="mb-6">
+                            <label for="method-retrait" class="block text-sm font-semibold text-gray-700 mb-2">Mode de récupération</label>
+                            <div class="relative">
+                                <select id="method-retrait" onchange="toggleModeRetrait()" class="w-full border border-gray-200 rounded-xl px-4 py-3 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all appearance-none cursor-pointer font-medium text-gray-700">
+                                    <option value="livraison">🚚 Livraison à domicile</option>
+                                    <option value="magasin">🏪 Retrait en magasin (Gratuit - Bordeaux)</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Info de retrait (Masqué par défaut) -->
+                        <div id="confirmation-livraison-msg" style="display: none;" class="mb-6 p-4 rounded-xl border"></div>
+
+                        <!-- Champs de livraison -->
+                        <div id="section-livraison" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="md:col-span-2">
+                                    <label for="delivery-city" class="block text-sm font-semibold text-gray-700 mb-2">Ville de livraison</label>
+                                    <input type="text" id="delivery-city" placeholder="Ex: Bordeaux, Talence..." oninput="toggleDistanceField()" class="w-full border border-gray-200 rounded-xl px-4 py-3 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label for="delivery-address" class="block text-sm font-semibold text-gray-700 mb-2">Adresse complète</label>
+                                    <input type="text" id="delivery-address" placeholder="12 rue des Fleurs, 33000" class="w-full border border-gray-200 rounded-xl px-4 py-3 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label for="delivery-notes" class="block text-sm font-semibold text-gray-700 mb-2">Précisions (Optionnel)</label>
+                                    <input type="text" id="delivery-notes" placeholder="Code, étage, ou commentaire..." class="w-full border border-gray-200 rounded-xl px-4 py-3 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                                </div>
+                            </div>
+
+                            <!-- Alerte Kilomètres -->
+                            <div id="km-group" style="display:none;" class="bg-amber-50 border border-amber-200 p-4 rounded-xl flex gap-4 items-start">
+                                <div class="text-amber-500 mt-0.5"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                <div>
+                                    <strong class="block text-sm text-amber-800 mb-1">Information livraison</strong>
+                                    <p class="text-sm text-amber-700 leading-relaxed">Facturation de 5 euros (majoré de 59 centimes par kilomètre parcouru si la livraison n’est pas dans la ville de Bordeaux).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Bloc 3 : Date et Heure -->
+                    <section class="bg-white p-8 rounded-3xl shadow-sm border border-gray-150">
+                        <h4 class="text-xl font-bold text-gray-800 logo-font mb-6 flex items-center gap-3">
+                            <span class="bg-[#9eb2a0]/10 text-[#9eb2a0] w-10 h-10 rounded-full flex items-center justify-center">
+                                <i class="fa-regular fa-calendar-check"></i>
+                            </span>
+                            Choix de la date & heure
+                        </h4>
+                        
+                        <div class="choix-creneau-container">
+                            <input type="hidden" id="date-prest" value="">
+                            <input type="hidden" id="heure-prest" value="">
+                            
+                            <!-- Le script injectera le calendrier ici -->
+                            <div id="calendrier-grid" class="calendar-columns-grid w-full"></div>
+                        </div>
+                    </section>
+                </form>
+            </div>
+
+            <!-- COLONNE DROITE : RÉCAPITULATIF (Prend 4 colonnes sur 12) -->
+            <div class="lg:col-span-4">
+                <div class="bg-white rounded-3xl shadow-lg border border-gray-150 sticky top-28 overflow-hidden">
+                    
+                    <!-- En-tête Panier -->
+                    <div class="bg-[#9eb2a0]/10 p-6 border-b border-[#9eb2a0]/20">
+                        <h3 class="text-xl font-bold text-gray-800 logo-font flex items-center gap-3">
+                            <i class="fa-solid fa-basket-shopping text-[#9eb2a0]"></i> Votre Panier
+                        </h3>
+                    </div>
+                    
+                    <!-- Contenu du Panier (Géré par le JS) -->
+                    <div class="p-6">
+                        <div id="liste-panier" class="space-y-4 mb-6 text-sm text-gray-600 min-h-[50px]">
+                            <!-- Injection JS -->
+                        </div>
+                        
+                        <!-- Détail des parts (Gardé discret) -->
+                        <div class="flex justify-between items-center text-sm text-gray-500 mb-6 bg-slate-50 p-3 rounded-lg">
+                            <span>Total de parts :</span>
+                            <strong id="display-nb-pers" class="text-gray-800 text-lg">0</strong>
+                        </div>
+                        
+                        <!-- Lignes de Prix -->
+                        <div class="space-y-3 border-t border-gray-100 pt-6">
+                            <div class="flex justify-between text-gray-600">
+                                <span>Sous-total plats</span>
+                                <span class="font-medium"><span id="sous-total-plats">0.00</span> €</span>
+                            </div>
+                            
+                            <!-- L'info cachée du total estimé d'origine -->
+                            <div style="display: none;" class="flex justify-between text-gray-600">
+                                <span>Total estimé</span>
+                                <strong id="total-price-recap">0.00 €</strong>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; color: #16a34a; font-weight: bold;">
+                                <span>Réduction (-10%) :</span>
+                                <span>-<span id="affichage-remise">0.00</span> €</span>
+                            </div>
+
+                            <p id="reduc-info" style="display:none;" class="text-emerald-600 text-xs font-bold bg-emerald-50 p-2 rounded">🎉 Réduction 10% incluse !</p>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Total Final & Bouton -->
+                    <div class="bg-slate-800 p-6">
+                        <div class="flex justify-between items-end mb-6 text-white">
+                            <span class="text-slate-300 font-medium">Total Final</span>
+                            <div class="text-3xl font-bold text-yellow-100">
+                                <span id="total-final">0.00</span> €
+                            </div>
+                        </div>
+
+                        <div class="mt-6 mb-6 p-4 bg-slate-50 border border-gray-200 rounded-lg text-sm text-gray-700 flex flex-col gap-4">
+    
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" id="cgv-livraison" class="mt-1 w-5 h-5 text-[#9eb2a0] focus:ring-[#9eb2a0] border-gray-300 rounded">
+                                <span>
+                                    J'accepte la facturation de <strong>5,00 € (majoré de 0,59 € par kilomètre parcouru)</strong> si mon adresse de livraison ne se trouve pas dans la ville de Bordeaux.
+                                </span>
+                            </label>
+
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" id="cgv-materiel" class="mt-1 w-5 h-5 text-[#9eb2a0] focus:ring-[#9eb2a0] border-gray-300 rounded">
+                                <span>
+                                    <strong>Prêt de matériel :</strong> Je m'engage à restituer tout matériel prêté sous <strong>10 jours ouvrés</strong> en prenant contact avec la société. Je reconnais que passé ce délai, <strong>600,00 € de frais</strong> me seront facturés (voir CGV).
+                                </span>
+                            </label>
+
+                        </div>
+
+                        <!-- On associe le clic du bouton externe au formulaire -->
+                        <button type="submit" form="orderForm" class="w-full bg-[#9eb2a0] hover:bg-[#8da390] text-white px-6 py-4 rounded-xl font-bold text-lg transition-all shadow-md flex justify-center items-center gap-3 transform active:scale-95">
+                            Confirmer la commande <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 pt-16 pb-8 border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-5 logo-font">Vite & <span class="text-yellow-100">Gourmand</span></h3>
+                <p class="text-sm leading-relaxed mb-4">
+                    Depuis 25 ans, Julie et José mettent leur passion au service de vos événements à Bordeaux. Traiteur de qualité pour tous vos moments gourmands.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 logo-font">Contact</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-location-dot text-[#9eb2a0] w-4"></i> Bordeaux, France</li>
+                    <li class="flex items-center gap-3" id="footer-tel"><i class="fa-solid fa-phone text-[#9eb2a0] w-4"></i> 05 56 XX XX XX</li>
+                    <li class="flex items-center gap-3" id="footer-email"><i class="fa-solid fa-envelope text-[#9eb2a0] w-4"></i> contact@vite-gourmand.fr</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 logo-font">Horaires</h4>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex justify-between border-b border-slate-700/50 pb-2">
+                        <span>Lundi - Vendredi :</span> <span class="text-white font-medium">9h - 18h</span>
+                    </li>
+                    <li class="flex justify-between border-b border-slate-700/50 pb-2">
+                        <span>Samedi :</span> <span class="text-white font-medium">9h - 13h</span>
+                    </li>
+                    <li class="flex justify-between pb-2">
+                        <span>Dimanche :</span> <span class="text-red-400 font-medium">Fermé</span>
+                    </li>
+                    <li class="text-xs text-[#9eb2a0] mt-2 italic">* Sur rendez-vous pour les consultations</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-800 text-center text-xs flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 Vite & Gourmand. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT D'ORIGINE -->
+    <script src="commande.js"></script>
+    <script>
+        // Fonction pour afficher/masquer les champs selon le mode de retrait (Identique à ton code avec styles intégrés Tailwind)
+        function toggleModeRetrait() {
+            const methode = document.getElementById('method-retrait').value;
+            const sectionLivraison = document.getElementById('section-livraison');
+            const msgZone = document.getElementById('confirmation-livraison-msg');
+            
+            if (methode === "magasin") {
+                sectionLivraison.style.display = "none";
+                msgZone.style.display = "block";
+                msgZone.innerHTML = "🏪 <strong>Retrait en magasin :</strong> 0.00€ de frais.<br>Adresse : 123 Rue de la Gourmandise, 33000 Bordeaux.";
+                // Remplacement des styles en dur par l'équivalent Tailwind pour l'esthétique
+                msgZone.className = "mb-6 p-4 rounded-xl border bg-emerald-50 border-emerald-200 text-emerald-800 text-sm";
+                
+                if(typeof resetLivraisonGratuite === 'function') resetLivraisonGratuite();
+            } else {
+                sectionLivraison.style.display = "block";
+                msgZone.style.display = "none";
+                toggleDistanceField(); 
+            }
+        }
+
+        // Affiche le message d'information si la ville n'est pas Bordeaux (Identique à ton code)
+        function toggleDistanceField() {
+            const methode = document.getElementById('method-retrait').value;
+            if (methode === "magasin") return;
+
+            const ville = document.getElementById('delivery-city').value.toLowerCase().trim();
+            const kmGroup = document.getElementById('km-group');
+            
+            if (ville !== "bordeaux" && ville !== "") {
+                kmGroup.style.display = "flex"; // Changé en flex pour conserver l'alignement icône/texte
+            } else {
+                kmGroup.style.display = "none";
+                if (ville === "bordeaux" && typeof validerLivraison === 'function') {
+                    validerLivraison();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Espace Client - Vite et Gourmand</title>
+    <link rel="stylesheet" href="style-auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box" id="register-box">
+            <h2>Créer un compte</h2>
+            <form id="form-register">
+                <div class="form-group-row">
+                    <input type="text" id="reg-nom" placeholder="Nom" required>
+                    <input type="text" id="reg-prenom" placeholder="Prénom" required>
+                </div>
+                <input type="email" id="reg-email" placeholder="Adresse Email" required>
+                <input type="password" id="reg-password" placeholder="Mot de passe" required>
+                <input type="tel" id="reg-telephone" placeholder="Téléphone" required>
+                <input type="text" id="reg-adresse" placeholder="Adresse (Rue, Avenue...)" required>
+                <input type="text" id="reg-ville" placeholder="Ville" required>
+                
+                <button type="submit" class="btn-auth">S'inscrire</button>
+                <div class="form-group rgpd-consent">
+                    <!-- L'attribut 'required' bloque la soumission si la case n'est pas cochée -->
+                    <input type="checkbox" id="rgpd_consent" name="rgpd_consent" required>
+                    
+                    <label for="rgpd_consent">
+                        J'accepte que Vite & Gourmand traite mes données personnelles pour la gestion de mon compte et de mes commandes. 
+                        Pour en savoir plus, consultez notre <a href="politique-confidentialite.html" target="_blank">Politique de confidentialité</a>.
+                    </label>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-box" id="login-box">
+            <h2>Se connecter</h2>
+            <form id="form-login">
+                <input type="email" id="log-email" placeholder="Adresse Email" required>
+                <input type="password" id="log-password" placeholder="Mot de passe" required>
+                <button type="submit" class="btn-auth">Connexion</button>
+                <div style="text-align: right; margin-top: -10px; margin-bottom: 15px;">
+                    <a href="formulaire_MP.html" id="forgot-password-link" style="font-size: 0.85rem; color: #059669; text-decoration: none;">Mot de passe oublié ?</a>
+                </div>
+            </form>
+            <div id="login-message" class="message"></div>
+        </div>
+    </div>
+</body>
+<script src="auth.js"></script>
+</html>

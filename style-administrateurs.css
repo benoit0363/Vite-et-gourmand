@@ -1,0 +1,305 @@
+/* --- Charte Graphique Vite & Gourmand --- */
+:root {
+    --primary-green: #00965e;
+    --light-gray: #f4f7f6;
+    --border-color: #e0e0e0;
+    --text-dark: #333;
+    --shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--light-gray);
+    color: var(--text-dark);
+    padding: 20px;
+}
+
+h2 {
+    color: var(--primary-green);
+    border-bottom: 2px solid var(--primary-green);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+/* --- Conteneur du Formulaire --- */
+fieldset, .form-container {
+    background: white;
+    border: none;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+legend {
+    font-weight: bold;
+    color: var(--primary-green);
+    padding: 0 10px;
+}
+
+/* --- Champs de Saisie (Inputs) --- */
+input[type="text"], 
+input[type="number"], 
+select, 
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box; /* Évite que le champ dépasse */
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(0, 150, 94, 0.1);
+}
+
+/* --- Boutons --- */
+button, .btn-submit {
+    background-color: var(--primary-green);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, background 0.3s;
+}
+
+button:hover {
+    background-color: #007a4d;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    margin-left: 10px;
+}
+
+/* --- Tableau des Menus --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+th {
+    background-color: #f8f9fa;
+    color: var(--primary-green);
+    text-align: left;
+    padding: 15px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+tr:hover {
+    background-color: #fcfcfc;
+}
+
+/* --- Mise en page spécifique (Grille) --- */
+.row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.col {
+    flex: 1;
+    min-width: 200px;
+}
+/* Style spécifique pour les sections du formulaire */
+.section-titre {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+    display: block;
+    border-left: 4px solid var(--primary-green);
+    padding-left: 10px;
+}
+
+/* Pour le champ "Logistique & Conditions" qui est un peu grand */
+textarea {
+    min-height: 100px;
+    resize: vertical; /* Permet à l'admin d'agrandir la zone si besoin */
+}
+
+/* Style pour le badge "En ligne" dans le tableau */
+.status-badge {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+#image-preview-container {
+    margin-top: 15px;
+    border: 2px dashed #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    min-width: 150px;
+    text-align: center;
+}
+
+#image-preview {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+/* Styles de l'entête */
+.main-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+    padding: 15px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo h1 {
+    color: #00965e;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover {
+    color: #00965e;
+}
+
+/* Le bouton vert "Commander" */
+.btn-commander {
+    background-color: #00965e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-badge {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 0.7rem;
+}
+/* --- ADAPTATION MOBILE --- */
+@media (max-width: 768px) {
+    /* Le header : on cache certains liens ou on les empile */
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .main-nav ul {
+        gap: 15px;
+        font-size: 0.9rem;
+    }
+
+    /* La grille : on passe à 1 seule colonne pour que les cartes soient larges */
+    #menus-grid {
+        grid-template-columns: 1fr; 
+        padding: 10px;
+    }
+
+    /* On réduit un peu la taille des titres pour gagner de la place */
+    .nos-menus-section h1 {
+        font-size: 1.8rem;
+    }
+
+    /* Dans l'admin, les lignes du formulaire passent l'une sous l'autre */
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* Style individuel de chaque carte de statistique */
+.stat-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid #00a86b; /* Bordure verte assortie à tes boutons active */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Léger effet de survol pour rendre l'interface vivante */
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Label textuel (ex: "Chiffre d'affaires (Ce mois)") */
+.stat-card p {
+    margin: 0 0 8px 0;
+    color: #666666;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Le grand chiffre mis en avant */
+.stat-info-num {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+}
+
+/* Le sous-texte optionnel (ex: "Sur 64 avis vérifiés") */
+.stat-trend {
+    font-size: 0.8rem;
+    color: #888888;
+    margin-top: 6px;
+    display: block;
+}

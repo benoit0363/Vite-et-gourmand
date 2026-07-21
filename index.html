@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite & Gourmand | Traiteur Événementiel à Bordeaux</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        h1, h2, h3, h4, .logo-font {
+            font-family: 'Comfortaa', cursive;
+        }
+        /* Fond avec une image assombrie pour la bannière d'accueil */
+        .hero-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.65)), url('https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- BARRE DE NAVIGATION -->
+    <header class="bg-[#9eb2a0] text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-2 rounded-full">
+                    <i class="fa-solid fa-leaf text-xl text-white"></i>
+                </div>
+                <a href="index.html" class="block">
+                    <span class="text-2xl font-bold tracking-wide logo-font">Vite & <span class="text-yellow-100">Gourmand</span></span>
+                    <p class="text-[10px] uppercase tracking-widest text-emerald-50">Traiteur Bordeaux</p>
+                </a>
+            </div>
+            
+            <!-- Liens de navigation principaux -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                <a href="index.html" class="hover:text-yellow-100 transition-colors border-b-2 border-yellow-100 pb-1">Accueil</a>
+                <a href="menus.html" class="hover:text-yellow-100 transition-colors">Nos Menus</a>
+                <a href="a-propos.html" class="hover:text-yellow-100 transition-colors">À propos</a>
+                <a href="contact.html" class="hover:text-yellow-100 transition-colors">Contact</a>
+            </nav>
+
+            <!-- Actions Client -->
+            <div class="flex items-center gap-3">
+                <a href="mon-compte.html" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-semibold transition-all hidden sm:flex items-center gap-2">
+                    <i class="fa-regular fa-circle-user"></i> Mon Compte
+                </a>
+                <a href="login.html" class="bg-white text-[#9eb2a0] hover:bg-slate-100 px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm">
+                    Connexion
+                </a>
+            </div>
+        </div>
+
+        <!-- Sous-menu discret pour l'administration -->
+        <div class="bg-[#8da390] text-emerald-50 text-xs py-2">
+            <div class="max-w-7xl mx-auto px-6 flex justify-end gap-5">
+                <a href="indexAdministrateur.html" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-lock text-[10px]"></i> Admin</a>
+                <a href="espace_employe.html" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-user-tie text-[10px]"></i> Employés</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        
+        <!-- SECTION HERO (Bannière) -->
+        <section class="hero-bg text-white py-28 md:py-40" aria-labelledby="hero-title">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <h1 id="hero-title" class="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg logo-font">
+                    Vite & <span class="text-yellow-200">Gourmand</span>
+                </h1>
+                <p class="text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto drop-shadow-md">
+                    Traiteur à Bordeaux depuis 25 ans : le savoir-faire au service de vos événements.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="menus.html" class="bg-[#9eb2a0] hover:bg-[#8da390] text-white px-8 py-3.5 rounded-xl font-bold text-lg transition-colors shadow-lg">
+                        Découvrir nos menus
+                    </a>
+                    <a href="a-propos.html" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/40 text-white px-8 py-3.5 rounded-xl font-bold text-lg transition-colors shadow-lg">
+                        Notre histoire
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION AVANTAGES (Pourquoi nous choisir) -->
+        <section class="max-w-7xl mx-auto px-6 py-20">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-bold text-gray-800 logo-font mb-4">Pourquoi nous choisir ?</h2>
+                <div class="w-20 h-1 bg-[#9eb2a0] mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <article class="bg-white p-8 rounded-2xl shadow-sm border border-gray-150 text-center hover:shadow-md transition-all group">
+                    <div class="text-5xl mb-5 transform group-hover:scale-110 transition-transform duration-300">🌿</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 logo-font">Qualité & Famille</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">Une passion transmise depuis 25 ans pour une cuisine authentique et faite maison.</p>
+                </article>
+                
+                <article class="bg-white p-8 rounded-2xl shadow-sm border border-gray-150 text-center hover:shadow-md transition-all group">
+                    <div class="text-5xl mb-5 transform group-hover:scale-110 transition-transform duration-300">🍎</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 logo-font">Fraîcheur</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">Sélection rigoureuse de produits locaux et de saison pour garantir l'excellence.</p>
+                </article>
+                
+                <article class="bg-white p-8 rounded-2xl shadow-sm border border-gray-150 text-center hover:shadow-md transition-all group">
+                    <div class="text-5xl mb-5 transform group-hover:scale-110 transition-transform duration-300">🚚</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 logo-font">Logistique</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">Julie assure une organisation millimétrée pour que votre réception soit parfaite.</p>
+                </article>
+                
+                <article class="bg-white p-8 rounded-2xl shadow-sm border border-gray-150 text-center hover:shadow-md transition-all group">
+                    <div class="text-5xl mb-5 transform group-hover:scale-110 transition-transform duration-300">👨‍🍳</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 logo-font">Expérience</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">José met son talent de chef au service de vos papilles pour des moments inoubliables.</p>
+                </article>
+            </div>
+        </section>
+        
+        <!-- SECTION DES AVIS CLIENTS -->
+        <section class="bg-[#9eb2a0]/10 py-20 border-y border-[#9eb2a0]/20">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold text-gray-800 logo-font mb-4">Ce que nos clients disent</h2>
+                <div class="w-20 h-1 bg-[#9eb2a0] mx-auto rounded-full mb-14"></div>
+                
+                <!-- Conteneur pour l'injection JS -->
+                <div id="avis-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+                    <div class="col-span-full py-12 flex flex-col items-center justify-center text-gray-500">
+                        <i class="fa-solid fa-spinner fa-spin text-4xl mb-4 text-[#9eb2a0]"></i>
+                        <p class="italic text-lg">Chargement des avis de nos clients...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION APPEL À L'ACTION (Laisser un avis) -->
+        <section class="max-w-3xl mx-auto px-6 py-20 text-center">
+            <div class="text-amber-400 text-5xl mb-6">
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800 logo-font mb-4">Votre avis compte pour nous !</h2>
+            <p class="text-gray-600 mb-8 leading-relaxed text-lg">
+                Vous avez récemment dégusté l'une de nos créations culinaires ? Partagez votre expérience gourmande et aidez-nous à parfaire nos services.
+            </p>
+            <a href="mon-compte.html" class="inline-block bg-[#9eb2a0] hover:bg-[#8da390] text-white px-8 py-3.5 rounded-xl font-bold text-lg transition-colors shadow-sm">
+                <i class="fa-regular fa-pen-to-square mr-2"></i> Donner mon avis
+            </a>
+        </section>
+        
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <!-- À propos -->
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-5 logo-font">Vite & <span class="text-yellow-100">Gourmand</span></h3>
+                <p class="text-sm leading-relaxed mb-4">
+                    Votre traiteur de confiance à Bordeaux. Une cuisine authentique et un accompagnement sur mesure pour tous vos événements familiaux et professionnels.
+                </p>
+            </div>
+            
+            <!-- Contact -->
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 logo-font">Contact</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-location-dot text-[#9eb2a0] w-4"></i> Bordeaux, France</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-phone text-[#9eb2a0] w-4"></i> 05 56 XX XX XX</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-[#9eb2a0] w-4"></i> contact@vite-gourmand.fr</li>
+                </ul>
+            </div>
+            
+            <!-- Horaires -->
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 logo-font">Horaires</h4>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex justify-between border-b border-slate-700/50 pb-2">
+                        <span>Lun - Ven :</span> <span class="text-white font-medium">9h00 - 18h00</span>
+                    </li>
+                    <li class="flex justify-between border-b border-slate-700/50 pb-2">
+                        <span>Samedi :</span> <span class="text-white font-medium">9h00 - 13h00</span>
+                    </li>
+                    <li class="flex justify-between pb-2">
+                        <span>Dimanche :</span> <span class="text-red-400 font-medium">Fermé</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Copyright -->
+        <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-800 text-center text-xs flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 Vite & Gourmand - Réalisé par FastDev. Certifié conforme aux exigences RNCP.</p>
+            <div class="flex gap-6">
+                <a href="politique-confidentialite.html" class="hover:text-white transition-colors">Mentions Légales</a>
+                <a href="cgv.html" class="hover:text-white transition-colors">CGV</a>
+                <a href="accessibilite.html" class="hover:text-white transition-colors">RGAA</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script externe existant -->
+    <script src="index.js"></script>
+</body>
+</html>

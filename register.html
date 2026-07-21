@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Vite & Gourmand</title>
+</head>
+<body>
+    <h2>Connexion</h2>
+    <form id="login-form">
+        <input type="email" id="login-email" placeholder="Email" required><br><br>
+        <input type="password" id="login-mdp" placeholder="Mot de passe" required><br><br>
+        <button type="submit">Se connecter</button>
+    </form>
+    <p id="login-message"></p>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('email', document.getElementById('login-email').value);
+            formData.append('mot_de_passe', document.getElementById('login-mdp').value);
+
+            fetch('api/index.php?action=login', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    document.getElementById('login-message').innerText = "Connexion réussie, redirection...";
+                    // Redirection automatique vers la page de commande après connexion
+                    setTimeout(() => window.location.href = 'commande.html', 1000);
+                } else {
+                    document.getElementById('login-message').innerText = data.message;
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        });
+    </script>
+</body>
+</html>

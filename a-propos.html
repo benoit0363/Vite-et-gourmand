@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos | Vite & Gourmand</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        h1, h2, h3, h4, .logo-font {
+            font-family: 'Comfortaa', cursive;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- BARRE DE NAVIGATION (Identique aux autres pages) -->
+    <header class="bg-[#9eb2a0] text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-2 rounded-full">
+                    <i class="fa-solid fa-leaf text-xl text-white"></i>
+                </div>
+                <a href="index.html" class="block">
+                    <span class="text-2xl font-bold tracking-wide logo-font">Vite & <span class="text-yellow-100">Gourmand</span></span>
+                    <p class="text-[10px] uppercase tracking-widest text-emerald-50">Traiteur Bordeaux</p>
+                </a>
+            </div>
+            
+            <!-- Liens de navigation principaux -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                <a href="index.html" class="hover:text-yellow-100 transition-colors">Accueil</a>
+                <a href="menus.html" class="hover:text-yellow-100 transition-colors">Nos Menus</a>
+                <a href="a-propos.html" class="hover:text-yellow-100 transition-colors border-b-2 border-yellow-100 pb-1">À propos</a>
+                <a href="contact.html" class="hover:text-yellow-100 transition-colors">Contact</a>
+            </nav>
+
+            <!-- Actions Client -->
+            <div class="flex items-center gap-3">
+                <a href="login.html" class="bg-white text-[#9eb2a0] hover:bg-slate-100 px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm">
+                    Connexion
+                </a>
+            </div>
+        </div>
+
+        <!-- Sous-menu discret pour l'administration -->
+        <div class="bg-[#8da390] text-emerald-50 text-xs py-2">
+            <div class="max-w-7xl mx-auto px-6 flex justify-end gap-5">
+                <a href="indexAdministrateur.html" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-lock text-[10px]"></i> Admin</a>
+                <a href="espace-employe.html" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-user-tie text-[10px]"></i> Employés</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full">
+        
+        <!-- SECTION HERO (Titre de page) -->
+        <section class="bg-[#9eb2a0]/10 py-16 md:py-24 text-center border-b border-[#9eb2a0]/20">
+            <div class="max-w-4xl mx-auto px-6">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 logo-font mb-6">Notre Histoire</h1>
+                <div class="w-20 h-1 bg-[#9eb2a0] mx-auto rounded-full mb-6"></div>
+                <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
+                    Depuis 25 ans, Julie et José partagent leur passion de la gastronomie au service de vos événements à Bordeaux.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION HISTOIRE (Texte + Images superposées) -->
+        <section class="max-w-7xl mx-auto px-6 py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Contenu Texte -->
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-800 logo-font mb-6">Une passion familiale</h2>
+                    <div class="space-y-4 text-gray-600 leading-relaxed text-lg">
+                        <p>
+                            Tout a commencé en 2001, lorsque Julie et José ont décidé de transformer leur passion pour la cuisine en métier. Avec pour seul bagage leur amour des bons produits et le désir de faire plaisir, ils ont créé <strong>"Vite & Gourmand"</strong>.
+                        </p>
+                        <p>
+                            Aujourd'hui, après 25 ans d'expérience, nous restons fidèles à nos valeurs : la qualité des produits, le respect des saisons, et surtout, la satisfaction de nos clients. Chaque événement est unique, et nous mettons un point d'honneur à créer des menus qui vous ressemblent.
+                        </p>
+                        <p>
+                            Que ce soit pour Noël, Pâques, ou tout autre événement de votre vie, nous sommes là pour sublimer vos moments gourmands avec des plats préparés avec amour et savoir-faire.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mise en page des images -->
+                <div class="relative h-[400px] sm:h-[500px] hidden sm:block">
+                    <img src="photo/cuisine.png" alt="Préparation en cuisine" class="absolute top-0 right-0 w-2/3 h-2/3 object-cover rounded-2xl shadow-2xl border-8 border-slate-50 z-20 bg-gray-300">
+                </div>
+                <!-- Images version mobile -->
+                <div class="sm:hidden space-y-6">
+                    <img src="photo/cuisine.png" alt="Chef au travail" class="w-full h-64 object-cover rounded-2xl shadow-md bg-gray-200">
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- SECTION VALEURS -->
+        <section class="bg-white py-20 border-y border-gray-200">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold text-gray-800 logo-font mb-4">Nos Valeurs</h2>
+                <div class="w-20 h-1 bg-[#9eb2a0] mx-auto rounded-full mb-14"></div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Valeur 1 -->
+                    <div class="p-6">
+                        <div class="w-20 h-20 mx-auto bg-red-50 rounded-full flex items-center justify-center text-4xl mb-6 shadow-sm border border-red-100">❤️</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 logo-font">Passion</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">L'amour de la cuisine et du bien-manger guide chacune de nos créations.</p>
+                    </div>
+                    <!-- Valeur 2 -->
+                    <div class="p-6">
+                        <div class="w-20 h-20 mx-auto bg-amber-50 rounded-full flex items-center justify-center text-4xl mb-6 shadow-sm border border-amber-100">🏅</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 logo-font">Qualité</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">Sélection rigoureuse de nos produits locaux pour garantir l'excellence.</p>
+                    </div>
+                    <!-- Valeur 3 -->
+                    <div class="p-6">
+                        <div class="w-20 h-20 mx-auto bg-emerald-50 rounded-full flex items-center justify-center text-4xl mb-6 shadow-sm border border-emerald-100">🌿</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 logo-font">Fraîcheur</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">Produits frais et de saison pour des saveurs authentiques et saines.</p>
+                    </div>
+                    <!-- Valeur 4 -->
+                    <div class="p-6">
+                        <div class="w-20 h-20 mx-auto bg-blue-50 rounded-full flex items-center justify-center text-4xl mb-6 shadow-sm border border-blue-100">🕒</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 logo-font">Expérience</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">25 ans de savoir-faire au service exclusif de vos plus beaux événements.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION MISE EN AVANT (Julie & José) -->
+        <section class="max-w-4xl mx-auto px-6 py-20">
+            <div class="bg-[#9eb2a0]/10 border border-[#9eb2a0]/30 rounded-3xl p-10 md:p-14 text-center shadow-sm relative overflow-hidden">
+                <!-- Décorations discrètes d'arrière-plan -->
+                <i class="fa-solid fa-leaf absolute -top-4 -left-4 text-7xl text-white/50 transform -rotate-45"></i>
+                <i class="fa-solid fa-utensils absolute -bottom-6 -right-6 text-8xl text-white/50 transform rotate-12"></i>
+                
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold text-gray-800 logo-font mb-6">Julie & José</h2>
+                    <div class="w-12 h-1 bg-[#8da390] mx-auto rounded-full mb-8"></div>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        <strong>Julie</strong>, passionnée de pâtisserie, crée des desserts qui émerveillent vos papilles. <strong>José</strong>, expert en cuisine traditionnelle bordelaise, sublime les produits du terroir.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Ensemble, ils forment un duo complémentaire qui met toute son énergie et son expertise à votre service. Leur objectif : faire de votre événement un moment inoubliable où la gastronomie est à l'honneur.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER (Identique aux autres pages) -->
+    <footer class="bg-slate-900 text-slate-400 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <!-- À propos -->
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-5 logo-font">Vite & <span class="text-yellow-100">Gourmand</span></h3>
+                <p class="text-sm leading-relaxed mb-4">
+                    Votre traiteur de confiance à Bordeaux. Une cuisine authentique et un accompagnement sur mesure pour tous vos événements familiaux et professionnels.
+                </p>
+            </div>
+            
+            <!-- Contact -->
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 logo-font">Contact</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-location-dot text-[#9eb2a0] w-4"></i> Bordeaux, France</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-phone text-[#9eb2a0] w-4"></i> 05 56 XX XX XX</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-[#9eb2a0] w-4"></i> contact@vite-gourmand.fr</li>
+                </ul>
+            </div>
+            
+            <!-- Horaires -->
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 logo-font">Horaires</h4>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex justify-between border-b border-slate-700/50 pb-2">
+                        <span>Lun - Ven :</span> <span class="text-white font-medium">9h00 - 18h00</span>
+                    </li>
+                    <li class="flex justify-between border-b border-slate-700/50 pb-2">
+                        <span>Samedi :</span> <span class="text-white font-medium">9h00 - 13h00</span>
+                    </li>
+                    <li class="flex justify-between pb-2">
+                        <span>Dimanche :</span> <span class="text-red-400 font-medium">Fermé</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Copyright -->
+        <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-800 text-center text-xs flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 Vite & Gourmand - Réalisé par FastDev. Certifié conforme aux exigences RNCP.</p>
+            <div class="flex gap-6">
+                <a href="politique-confidentialite.html" class="hover:text-white transition-colors">Mentions Légales</a>
+                <a href="cgv.html" class="hover:text-white transition-colors">CGV</a>
+                <a href="accessibilite.html" class="hover:text-white transition-colors">RGAA</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

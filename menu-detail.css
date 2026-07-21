@@ -1,0 +1,246 @@
+:root {
+    --primary-color: #008a5e; /* Vert de l'image 2 */
+    --primary-hover: #006d4a;
+    --bg-light: #f9f9f9;
+    --text-dark: #2c3e50;
+    --text-muted: #7f8c8d;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* --- NAVIGATION --- */
+.navbar {
+    background: white;
+    padding: 15px 20px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* --- PAGE CATALOGUE (STYLE IMAGE 2) --- */
+
+.menu-section-header {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.menu-section-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+/* Filtres de catégorie */
+.filters-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Grille de cartes */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.menu-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-card:hover {
+    transform: translateY(-8px);
+}
+
+.menu-card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.price-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--primary-color);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    z-index: 10;
+}
+
+.menu-card-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.menu-card-category {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.menu-card-title {
+    font-size: 1.25rem;
+    margin: 10px 0;
+    font-weight: 700;
+}
+
+.menu-card-description {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.btn-add-to-cart {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-add-to-cart:hover {
+    background: var(--primary-hover);
+}
+
+/* --- PAGE DÉTAIL MENU --- */
+
+.detail-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.detail-header {
+    text-align: center;
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.badge {
+    background: #e8f5e9;
+    color: var(--primary-color);
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.course-card {
+    padding: 20px;
+    background: var(--bg-light);
+    border-left: 5px solid #e67e22; /* Accent gastronomique */
+    border-radius: 5px;
+}
+
+.course-card h3 {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.course-card p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.allergenes-box {
+    background: #fff5f5;
+    border: 1px solid #feb2b2;
+    color: #c53030;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.conditions-highlight {
+    background: #fffaf0;
+    border: 2px dashed #dd6b20;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 30px 0;
+}
+
+.btn-order-now {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: var(--primary-color);
+    color: white;
+    padding: 18px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-order-now:hover {
+    background: var(--primary-hover);
+}

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Vite & Gourmand</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        h1, h2, h3, .logo-font {
+            font-family: 'Comfortaa', cursive;
+        }
+        /* Masquer le contenu inactif des onglets */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800">
+
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div class="bg-amber-500/20 p-2 rounded-full">
+                    <i class="fa-solid fa-crown text-xl text-amber-400"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-wide logo-font">Vite & <span class="text-amber-400">Gourmand</span></span>
+                    <p class="text-[10px] uppercase tracking-widest text-slate-400">Espace Administrateur</p>
+                </div>
+            </a>
+            
+
+            <nav class="flex items-center gap-6">
+                <div class="hidden sm:flex items-center gap-2 text-sm">
+                    <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-amber-400">A</div>
+                    <span class="font-medium text-slate-300">Administrateur</span>
+                </div>
+                
+                <button onclick="deconnecterAdministrateur()" class="text-white hover:text-red-200 ml-4 transition-colors" title="Se déconnecter">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>deconnexion
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="bg-white border-b border-slate-200 sticky top-[72px] z-30 shadow-sm overflow-x-auto">
+        <div class="max-w-7xl mx-auto px-6 flex gap-2 sm:gap-6" role="tablist">
+            <button onclick="switchTab('accueil')" id="tab-accueil" class="tab-btn active py-4 px-3 font-semibold text-sm border-b-2 border-amber-500 text-amber-600 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-chart-line"></i> Tableau de bord
+            </button>
+            <button onclick="switchTab('menus')" id="tab-menus" class="tab-btn py-4 px-3 font-semibold text-sm border-b-2 border-transparent text-slate-500 hover:text-amber-600 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-utensils"></i> Catalogue Menus
+            </button>
+            <button onclick="switchTab('commandes')" id="tab-commandes" class="tab-btn py-4 px-3 font-semibold text-sm border-b-2 border-transparent text-slate-500 hover:text-amber-600 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-inbox"></i> Commandes
+            </button>
+            <button onclick="switchTab('parametres')" id="tab-parametres" class="tab-btn py-4 px-3 font-semibold text-sm border-b-2 border-transparent text-slate-500 hover:text-amber-600 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-users-gear"></i> Personnel & Horaires
+            </button>
+            <button onclick="switchTab('messages')" id="tab-message" class="tab-btn py-4 px-3 font-semibold text-sm border-b-2 border-transparent text-slate-500 hover:text-amber-600 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-envelope"></i> Messages
+            </button>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-6 py-8 flex-grow w-full">
+
+        <section id="section-accueil" class="tab-content active space-y-8">
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                
+                <!-- TOP MENUS -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                        <h4 class="font-bold text-emerald-700">
+                            🏆 Menu le plus vendu
+                        </h4>
+                        <div class="mt-3">
+                            <p class="text-lg font-bold">
+                                Menu Gourmet
+                            </p>
+                            <p>🍽️ 62 commandes</p>
+                            <p>👥 45 clients</p>
+                            <p>💰 5 580 €</p>
+                        </div>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                        <h4 class="font-bold text-amber-700">
+                            ⭐ Menu le plus rentable
+                        </h4>
+                        <div class="mt-3">
+                            <p class="text-lg font-bold">
+                                Menu Gourmet
+                            </p>
+                            <p>🍽️ 62 commandes</p>
+                            <p>💰 5 580 €</p>
+                        </div>
+                    </div>
+                    <div class="bg-sky-50 border border-sky-200 rounded-xl p-4">
+                        <h4 class="font-bold text-sky-700">
+                            🌱 Menu Vegan
+                        </h4>
+                        <div class="mt-3">
+                            <p>🍽️ 22 commandes</p>
+                            <p>👥 19 clients</p>
+                            <p>💰 1 760 €</p>
+                        </div>
+                    </div>
+                    <div class="bg-purple-50 border border-purple-200 rounded-xl p-4">
+                        <h4 class="font-bold text-purple-700">
+                            💒 Menu Mariage
+                        </h4>
+                        <div class="mt-3">
+                            <p>🍽️ 15 commandes</p>
+                            <p>👥 12 clients</p>
+                            <p>💰 5 250 €</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- RESUME -->
+                <div class="mt-6 bg-slate-50 border border-slate-200 rounded-xl p-4">
+                    <h4 class="font-bold text-slate-700 mb-4">
+                        📈 Résumé Global
+                    </h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div>
+                            <p class="text-xs text-slate-500">
+                                Menus analysés
+                            </p>
+                            <p class="text-2xl font-bold">
+                                5
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">
+                                Commandes
+                            </p>
+                            <p class="text-2xl font-bold">
+                                182
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">
+                                Clients
+                            </p>
+                            <p class="text-2xl font-bold">
+                                136
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">
+                                CA Total
+                            </p>
+                            <p class="text-2xl font-bold text-emerald-600">
+                                19 360 €
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </section>
+
+        <section id="section-menus" class="tab-content">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold logo-font text-slate-800">Catalogue des Menus</h2>
+                    <p class="text-sm text-slate-500">Gérez les plats proposés sur le site web.</p>
+                </div>
+                <button id="btn-ouvrir-ajout" onclick="toggleForm('zone-formulaire-admin')" class="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Nouveau Menu
+                </button>
+            </div>
+
+            <div id="zone-formulaire-admin" class="hidden bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-8">
+                <h3 class="text-lg font-bold mb-6 border-b pb-2">Création d'un menu</h3>
+                <form id="add-menu-form" enctype="multipart/form-data" class="space-y-6">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Nom du menu</label>
+                            <input type="text" id="admin-titre" name="nom" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Ex: Prestige de Noël" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Thème</label>
+                            <select id="admin-theme" name="theme" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                <option value="Noel">Noël</option>
+                                <option value="Printemps">Printemps</option>
+                                <option value="Classique">Classique</option>
+                                <option value="Évènement">Évènement</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="col-span-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Régime alimentaire</label>
+                            <select id="admin-regime" name="regime" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm">
+                                <option value="classique">Classique</option>
+                                <option value="vegetarien">Végétarien</option>
+                                <option value="vegan">Vegan</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Prix unitaire (€)</label>
+                            <input type="number" step="0.01" id="admin-prix" name="prix" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Stock disponible</label>
+                            <input type="number" id="admin-stock" name="stock" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm" required>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <h4 class="font-semibold text-sm mb-4">Composition de la carte</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" id="admin-entree" name="entree" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Nom de l'entrée" required>
+                            <input type="text" id="admin-ing-entree" name="ing_entree" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Ingrédients entrée" required>
+                            <input type="text" id="admin-plat" name="plat" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Nom du plat" required>
+                            <input type="text" id="admin-ing-plat" name="ing_plat" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Ingrédients plat" required>
+                            <input type="text" id="admin-dessert" name="dessert" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Nom du dessert" required>
+                            <input type="text" id="admin-ing-dessert" name="ing_dessert" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Ingrédients dessert" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Allergènes</label>
+                        <input type="text" id="admin-allergenes" name="allergenes" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm" placeholder="Ex: Arachides, Gluten...">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Illustration du menu</label>
+                            <input type="file" id="admin-file" name="photo" accept="image/*" onchange="previewImage()" class="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                            <img id="image-preview" src="" alt="Aperçu" class="mt-2 h-20 rounded hidden object-cover">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Description / Conditions</label>
+                            <textarea id="admin-conditions" name="description" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 justify-end border-t pt-4">
+                        <button type="button" onclick="toggleForm('zone-formulaire-admin')" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">Annuler</button>
+                        <button type="submit" class="px-5 py-2 text-sm font-bold text-white bg-slate-800 hover:bg-slate-700 rounded-lg shadow-sm transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Mettre en ligne
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-slate-50 text-slate-600 border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold">Nom du Menu</th>
+                                <th class="px-6 py-4 font-semibold">Thème</th>
+                                <th class="px-6 py-4 font-semibold">Prix</th>
+                                <th class="px-6 py-4 font-semibold">Stock restant</th>
+                                <th class="px-6 py-4 font-semibold text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-menus-list" class="divide-y divide-slate-100">
+                            <tr>
+                                <td colspan="5" class="px-6 py-8 text-center text-slate-400 italic">Chargement du catalogue...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-commandes" class="tab-content">
+            <h2 class="text-2xl font-bold logo-font text-slate-800 mb-6">Suivi des Commandes</h2>
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-8">
+                <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                    <div class="flex-grow">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" id="admin-search-cmd" oninput="filtrerCommandes()" placeholder="Rechercher un client, une référence..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <label class="text-sm font-semibold text-slate-700 whitespace-nowrap">Statut :</label>
+                        <select id="admin-filter-status" onchange="filtrerCommandes()" class="bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 min-w-[150px]">
+                            <option value="All">Toutes les commandes</option>
+                            <option value="Prêt">Prêt</option>
+                            <option value="Livré">Livré</option>
+                            <option value="Annulée">Annulée</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-200 rounded-lg">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-slate-50 text-slate-600 border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold">Date</th>
+                                <th class="px-6 py-4 font-semibold">Client / Contact</th>
+                                <th class="px-6 py-4 font-semibold">Adresse</th>
+                                <th class="px-6 py-4 font-semibold">Ville</th>
+                                <th class="px-6 py-4 font-semibold">Menus Commandés</th>
+                                <th class="px-6 py-4 font-semibold">Total</th>
+                                <th class="px-6 py-4 font-semibold">Statut</th>
+                                <th class="px-6 py-4 font-semibold text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-commandes-list" class="divide-y divide-slate-100">
+                            <tr>
+                                <td colspan="8" class="px-6 py-8 text-center text-slate-400 italic">Aucune commande récente...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-parametres" class="tab-content space-y-8">
+            
+            <div>
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold logo-font text-slate-800">Équipe</h2>
+                        <p class="text-sm text-slate-500">Gérez les accès de vos collaborateurs.</p>
+                    </div>
+                    <button onclick="toggleForm('zone-formulaire-employe')" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all shadow-sm">
+                        <i class="fa-solid fa-user-plus mr-2"></i> Ajouter Employé
+                    </button>
+                </div>
+
+                <div id="zone-formulaire-employe" class="hidden bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+                    <form id="add-employe-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Nom</label>
+                            <input type="text" id="nom" name="nom" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-slate-800">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Prénom</label>
+                            <input type="text" id="prenom" name="prenom" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-slate-800">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Email de connexion</label>
+                            <input type="email" id="email" name="email" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-slate-800">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Mot de passe provisoire</label>
+                            <input type="password" id="mot_de_passe" name="mot_de_passe" placeholder="Ex: Vitegourmand33!" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-slate-800">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Téléphone (optionnel)</label>
+                            <input type="text" id="telephone" name="telephone" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-slate-800">
+                        </div>
+                        <div class="md:col-span-2 flex justify-end gap-3 mt-2">
+                            <button type="button" onclick="toggleForm('zone-formulaire-employe')" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg">Annuler</button>
+                            <button type="submit" class="px-5 py-2 text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm">Créer le compte</button>
+                        </div>
+                    </form>
+                </div>
+                    
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-slate-50 text-slate-600 border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold">Employé</th>
+                                <th class="px-6 py-4 font-semibold">Email & Contact</th>
+                                <th class="px-6 py-4 font-semibold">Date d'ajout</th>
+                                <th class="px-6 py-4 font-semibold text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-employes-list" class="divide-y divide-slate-100">
+                            <tr><td colspan="4" class="px-6 py-6 text-center text-slate-400">Chargement...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 border-t-4 border-t-sky-500">
+                <h3 class="text-xl font-bold logo-font text-slate-800 mb-2">Horaires d'Ouverture</h3>
+                <p class="text-sm text-slate-500 mb-6">Modifiez les horaires ici pour mettre à jour automatiquement le site client.</p>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm border-collapse">
+                        <thead class="text-slate-600 border-b-2 border-slate-200">
+                            <tr>
+                                <th class="py-3 pr-4">Jour</th>
+                                <th class="py-3 px-2 text-center">Ouvert</th>
+                                <th class="py-3 px-2 text-center">Midi Début</th>
+                                <th class="py-3 px-2 text-center">Midi Fin</th>
+                                <th class="py-3 px-2 text-center">Soir Début</th>
+                                <th class="py-3 px-2 text-center">Soir Fin</th>
+                                <th class="py-3 pl-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <script>
+                                const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+                                jours.forEach((jour, index) => {
+                                    const id = index + 1;
+                                    document.write(`
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="py-3 pr-4 font-semibold text-slate-700">${jour}</td>
+                                            <td class="py-3 px-2 text-center"><input type="checkbox" id="open-${id}" class="w-4 h-4 text-sky-600 rounded focus:ring-sky-500" checked></td>
+                                            <td class="py-3 px-2 text-center"><input type="time" id="md-${id}" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-sky-500 outline-none"></td>
+                                            <td class="py-3 px-2 text-center"><input type="time" id="mf-${id}" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-sky-500 outline-none"></td>
+                                            <td class="py-3 px-2 text-center"><input type="time" id="sd-${id}" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-sky-500 outline-none"></td>
+                                            <td class="py-3 px-2 text-center"><input type="time" id="sf-${id}" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-sky-500 outline-none"></td>
+                                            <td class="py-3 pl-4 text-right"><button onclick="sauvegarderHoraire(${id})" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-1.5 px-3 rounded border border-slate-300 transition-colors">Enregistrer</button></td>
+                                        </tr>
+                                    `);
+                                });
+                            </script>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="section-messages" class="tab-content">
+    
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Gestion des Contacts</h1>
+                    <p class="text-sm text-slate-500">Consultez et traitez les messages laissés par les clients.</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-semibold text-slate-800">Boîte de réception</h2>
+                    <span class="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-3 py-1 rounded-full">
+                        Contact Client
+                    </span>
+                </div>
+                
+                <div id="messages-container" class="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+                    
+                    <div class="flex justify-center items-center py-8">
+                        <p class="text-slate-400 text-sm animate-pulse">Chargement des messages...</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Gestion des Onglets Principaux
+        function switchTab(tabId) {
+            // Masquer tout le contenu
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            // Réinitialiser les boutons d'onglets
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active', 'border-amber-500', 'text-amber-600');
+                el.classList.add('border-transparent', 'text-slate-500');
+            });
+            
+            // Activer le contenu cible
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Activer le bouton cible
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.remove('border-transparent', 'text-slate-500');
+            activeBtn.classList.add('active', 'border-amber-500', 'text-amber-600');
+        }
+
+        // Bascule générique pour l'affichage des formulaires
+        function toggleForm(formId) {
+            const form = document.getElementById(formId);
+            if (form.classList.contains('hidden')) {
+                form.classList.remove('hidden');
+            } else {
+                form.classList.add('hidden');
+            }
+        }
+    </script>
+
+    <script src="ScriptAdministrateur.js"></script>
+</body>
+</html>
