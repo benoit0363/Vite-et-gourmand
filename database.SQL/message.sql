@@ -1,0 +1,10 @@
+CREATE TABLE `messages` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `nom` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `tel` VARCHAR(50) DEFAULT NULL,
+  `sujet` VARCHAR(255) NOT NULL,
+  `message` TEXT NOT NULL,
+  `lu` TINYINT(1) DEFAULT 0, -- 0 = non lu, 1 = lu par l'admin
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

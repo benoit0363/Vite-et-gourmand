@@ -1,0 +1,52 @@
+[
+  {
+    "_id": "menu_prestige",
+    "nom_menu": "Menu Prestige",
+    "theme": "Noel",
+    "statistiques": {
+      "nombre_commandes": 48,
+      "nombre_clients": 32,
+      "chiffre_affaires": 4320
+    }
+  },
+  {
+    "_id": "menu_tradition",
+    "nom_menu": "Menu Tradition",
+    "theme": "Classique",
+    "statistiques": {
+      "nombre_commandes": 35,
+      "nombre_clients": 28,
+      "chiffre_affaires": 2450
+    }
+  },
+  {
+    "_id": "menu_gourmet",
+    "nom_menu": "Menu Gourmet",
+    "theme": "Classique",
+    "statistiques": {
+      "nombre_commandes": 62,
+      "nombre_clients": 45,
+      "chiffre_affaires": 5580
+    }
+  },
+  {
+    "_id": "menu_mariage",
+    "nom_menu": "Menu Mariage",
+    "theme": "Evenement",
+    "statistiques": {
+      "nombre_commandes": 15,
+      "nombre_clients": 12,
+      "chiffre_affaires": 5250
+    }
+  },
+  {
+    "_id": "menu_vegan",
+    "nom_menu": "Menu Vegan",
+    "theme": "Printemps",
+    "statistiques": {
+      "nombre_commandes": 22,
+      "nombre_clients": 19,
+      "chiffre_affaires": 1760
+    }
+  }
+]
