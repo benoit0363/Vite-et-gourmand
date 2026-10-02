@@ -1,14 +1,19 @@
 <?php
 
-require '../config/database.php';
+require __DIR__ . '/../config/Database.php';
 require 'connexion.php';
 
+// 1. On initialise la connexion PDO via votre méthode statique
+$pdo = Database::getConnection();
+
+// 2. Ensuite, votre bloc s'exécutera sans erreur
 $db->stats_menus->deleteMany([]);
 
 $stmt = $pdo->query("
     SELECT details_panier
     FROM commandes
 ");
+$commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($commandes as $commande) {
     $panier = json_decode(
