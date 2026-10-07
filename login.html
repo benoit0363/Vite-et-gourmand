@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Client - Vite & Gourmand</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome pour les icônes (optionnel mais recommandé) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        h2, .logo-font {
+            font-family: 'Comfortaa', cursive;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center py-10 px-4 md:px-6">
+
+    <!-- En-tête minimaliste pour le retour à l'accueil -->
+    <div class="mb-8 text-center">
+        <a href="index.html" class="inline-flex items-center gap-2 text-[#9eb2a0] hover:text-[#8da390] transition-colors mb-4 font-semibold">
+            <i class="fa-solid fa-arrow-left"></i> Retour à l'accueil
+        </a>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 logo-font">Espace Client</h1>
+    </div>
+
+    <!-- Conteneur principal (Grille Responsive) -->
+    <div class="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Bloc : Créer un compte -->
+        <div id="register-box" class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-150">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 logo-font">Créer un compte</h2>
+            
+            <form id="form-register" class="space-y-4">
+                <!-- Ligne Nom / Prénom -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input type="text" id="reg-nom" placeholder="Nom" required 
+                           class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                    <input type="text" id="reg-prenom" placeholder="Prénom" required 
+                           class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                </div>
+                
+                <input type="email" id="reg-email" placeholder="Adresse Email" required 
+                       class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                
+                <input type="password" id="reg-password" placeholder="Mot de passe" required 
+                       class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                
+                <input type="tel" id="reg-telephone" placeholder="Téléphone" required 
+                       class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                
+                <input type="text" id="reg-adresse" placeholder="Adresse (Rue, Avenue...)" required 
+                       class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                
+                <input type="text" id="reg-ville" placeholder="Ville" required 
+                       class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                
+                <!-- Consentement RGPD -->
+                <div class="flex items-start gap-3 mt-4 bg-slate-50 p-4 rounded-lg border border-gray-100">
+                    <input type="checkbox" id="rgpd_consent" name="rgpd_consent" required 
+                           class="mt-1 w-4 h-4 text-[#9eb2a0] border-gray-300 rounded focus:ring-[#9eb2a0]">
+                    <label for="rgpd_consent" class="text-xs text-gray-600 leading-relaxed">
+                        J'accepte que Vite & Gourmand traite mes données personnelles pour la gestion de mon compte et de mes commandes. 
+                        Pour en savoir plus, consultez notre <a href="politique-confidentialite.html" target="_blank" class="text-[#9eb2a0] font-semibold hover:underline">Politique de confidentialité</a>.
+                    </label>
+                </div>
+                
+                <button type="submit" class="w-full bg-[#9eb2a0] hover:bg-[#8da390] text-white py-3.5 rounded-xl font-bold transition-colors shadow-sm mt-6">
+                    S'inscrire
+                </button>
+            </form>
+        </div>
+
+        <!-- Bloc : Se connecter -->
+        <div id="login-box" class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-150 h-fit">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 logo-font">Se connecter</h2>
+            
+            <form id="form-login" class="space-y-4">
+                <input type="email" id="log-email" placeholder="Adresse Email" required 
+                       class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                
+                <input type="password" id="log-password" placeholder="Mot de passe" required 
+                       class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                
+                <div class="text-right">
+                    <a href="formulaire_MP.html" id="forgot-password-link" class="text-sm text-[#9eb2a0] hover:text-[#8da390] font-medium hover:underline transition-all">
+                        Mot de passe oublié ?
+                    </a>
+                </div>
+
+                <button type="submit" class="w-full bg-slate-800 hover:bg-slate-700 text-white py-3.5 rounded-xl font-bold transition-colors shadow-sm mt-4">
+                    Connexion
+                </button>
+            </form>
+            
+            <!-- Message de retour (caché par défaut, manipulé par auth.js) -->
+            <div id="login-message" class="mt-4 text-center text-sm font-medium hidden"></div>
+        </div>
+        
+    </div>
+
+    <!-- Script Auth.js conservé -->
+    <script src="auth.js"></script>
+</body>
+</html>
