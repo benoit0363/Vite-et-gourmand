@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Menu | Vite & Gourmand</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        h1, h2, h3, h4, .logo-font {
+            font-family: 'Comfortaa', cursive;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <header class="bg-[#9eb2a0] text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-2 rounded-full">
+                    <i class="fa-solid fa-leaf text-xl text-white"></i>
+                </div>
+                <a href="index.html" class="block">
+                    <span class="text-2xl font-bold tracking-wide logo-font">Vite & <span class="text-yellow-100">Gourmand</span></span>
+                    <p class="text-[10px] uppercase tracking-widest text-emerald-50">Traiteur Bordeaux</p>
+                </a>
+            </div>
+            
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                <a href="index.html" class="hover:text-yellow-100 transition-colors">Accueil</a>
+                <a href="menus.html" class="hover:text-yellow-100 transition-colors border-b-2 border-yellow-100 pb-1">Nos Menus</a>
+                <a href="a-propos.html" class="hover:text-yellow-100 transition-colors">À propos</a>
+                <a href="contact.html" class="hover:text-yellow-100 transition-colors">Contact</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="login.html" class="bg-white text-[#9eb2a0] hover:bg-slate-100 px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm">
+                    Connexion
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="max-w-7xl mx-auto px-6 py-4 text-sm font-medium text-gray-500">
+        <a href="index.html" class="hover:text-[#9eb2a0] transition-colors"><i class="fa-solid fa-house text-xs"></i> Accueil</a>
+        <span class="mx-2 text-gray-400">/</span>
+        <a href="menus.html" class="hover:text-[#9eb2a0] transition-colors">Nos Menus</a>
+        <span class="mx-2 text-gray-400">/</span>
+        <span class="text-gray-800" id="breadcrumb-title">Détail du Menu</span>
+    </nav>
+
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-6 w-full mb-12">
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-150 p-6 md:p-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                
+                <div class="lg:col-span-5 flex flex-col gap-6">
+                    <div class="relative rounded-2xl overflow-hidden shadow-md bg-gray-100 h-[350px] md:h-[450px]">
+                        <img id="det-image" src="" alt="Image du menu" class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="bg-slate-50 border border-gray-200 rounded-2xl p-6 shadow-inner">
+                        <div class="flex justify-between items-end mb-6">
+                            <div>
+                                <p class="text-sm text-gray-500 font-semibold mb-1 uppercase tracking-wide">Prix par personne</p>
+                                <div class="text-4xl font-bold text-[#9eb2a0]">
+                                    <span id="det-prix">0.00</span> €
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-box"></i> <span id="det-stock">0</span> en stock
+                                </span>
+                            </div>
+                        </div>
+
+                        <button onclick="ajouterDepuisDetails()" class="w-full bg-[#9eb2a0] hover:bg-[#8da390] text-white px-6 py-4 rounded-xl font-bold text-lg transition-all shadow-md flex justify-center items-center gap-3 transform active:scale-95">
+                            <i class="fa-solid fa-cart-plus"></i> Ajouter ce menu
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 flex flex-col">
+                    
+                    <div class="mb-8 border-b border-gray-100 pb-6">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span id="det-theme" class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">Thème</span>
+                            <span id="det-regime" class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">Régime</span>
+                        </div>
+                        <h1 id="det-titre" class="text-4xl md:text-5xl font-bold text-gray-800 logo-font leading-tight">Chargement...</h1>
+                    </div>
+
+                    <div class="space-y-6 mb-10">
+                        <div class="relative pl-6 border-l-4 border-emerald-400">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-600 mb-1">Entrée</h3>
+                            <p id="det-entree" class="text-lg font-bold text-gray-800 leading-snug">Chargement...</p>
+                            <p id="det-ing-entree" class="text-sm text-gray-500 italic mt-1.5"></p>
+                        </div>
+                        
+                        <div class="relative pl-6 border-l-4 border-amber-400">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-amber-600 mb-1">Plat Principal</h3>
+                            <p id="det-plat" class="text-xl font-bold text-gray-800 leading-snug">Chargement...</p>
+                            <p id="det-ing-plat" class="text-sm text-gray-500 italic mt-1.5"></p>
+                        </div>
+                        
+                        <div class="relative pl-6 border-l-4 border-purple-400">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-purple-600 mb-1">Dessert</h3>
+                            <p id="det-dessert" class="text-lg font-bold text-gray-800 leading-snug">Chargement...</p>
+                            <p id="det-ing-dessert" class="text-sm text-gray-500 italic mt-1.5"></p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto">
+                        <div class="bg-red-50/50 border border-red-100 rounded-xl p-4 flex gap-4 items-start">
+                            <div class="text-red-500 mt-1"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div>
+                                <strong class="block text-sm text-red-800 mb-1">Allergènes</strong>
+                                <span id="det-allergenes" class="text-sm text-red-600">Aucun</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 flex gap-4 items-start">
+                            <div class="text-blue-500 mt-1"><i class="fa-solid fa-circle-info"></i></div>
+                            <div>
+                                <strong class="block text-sm text-blue-800 mb-1">Informations</strong>
+                                <p id="det-conditions" class="text-sm text-blue-600 leading-relaxed">Chargement des conditions...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-5 logo-font">Vite & <span class="text-yellow-100">Gourmand</span></h3>
+                <p class="text-sm leading-relaxed mb-4">
+                    Depuis 25 ans, Julie et José mettent leur passion au service de vos événements à Bordeaux. Traiteur de qualité pour tous vos moments gourmands.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 logo-font">Contact</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-location-dot text-[#9eb2a0] w-4"></i> Bordeaux, France</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-phone text-[#9eb2a0] w-4"></i> 05 56 XX XX XX</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-[#9eb2a0] w-4"></i> contact@vite-gourmand.fr</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold text-white mb-5 logo-font">Horaires</h4>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex justify-between border-b border-slate-700/50 pb-2">
+                        <span>Lundi - Vendredi :</span> <span class="text-white font-medium">9h00 - 18h00</span>
+                    </li>
+                    <li class="flex justify-between border-b border-slate-700/50 pb-2">
+                        <span>Samedi :</span> <span class="text-white font-medium">9h00 - 13h00</span>
+                    </li>
+                    <li class="flex justify-between pb-2">
+                        <span>Dimanche :</span> <span class="text-red-400 font-medium">Fermé</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-800 text-center text-xs flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 Vite & Gourmand. Tous droits réservés. Réalisé par FastDev.</p>
+        </div>
+    </footer>
+
+    <script src="menus-details.js"></script>
+</body>
+</html>

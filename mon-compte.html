@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Compte - Vite & Gourmand</title>
+    
+    <!-- Tailwind CSS pour la mise en page responsive et moderne -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome pour les icônes de navigation, d'avis et de statut -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts (Comfortaa pour l'esprit traiteur et Plus Jakarta Sans pour la lisibilité) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    
+</head>
+<body class="bg-[#f8fafc] text-gray-800 min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER / NAVIGATION (Couleur Vert Sauge #9eb2a0) -->
+    <header class="bg-[#9eb2a0] text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-2 rounded-full">
+                    <i class="fa-solid fa-utensils text-2xl text-white"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-wide logo-font">Vite & <span class="text-yellow-100">Gourmand</span></span>
+                    <p class="text-[10px] uppercase tracking-widest text-emerald-50">Service Traiteur</p>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex items-center gap-8 font-medium">
+                <a href="index.html" class="hover:text-yellow-100 transition-colors">Accueil</a>
+                <a href="menus.html" class="hover:text-yellow-100 transition-colors">Nos Menus</a>
+                <a href="mon-compte.html" class="bg-white/20 px-4 py-2 rounded-lg text-yellow-100 flex items-center gap-2">
+                    <i class="fa-solid fa-user-circle"></i> Mon Compte
+                </a>
+                <button onclick="deconnecterUtilisateur()" class="text-white hover:text-red-200 ml-4 transition-colors" title="Se déconnecter">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>deconnexion
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Toast de notification personnalisé (Remplaçant élégant de alert()) -->
+    <div id="toast" class="fixed top-24 right-6 bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-lg transform translate-x-[150%] transition-transform duration-300 z-50 flex items-center gap-3">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-lg"></i>
+        <span id="toast-message" class="font-medium">Action réussie !</span>
+    </div>
+
+    <!-- Modale personnalisée de détails de commande active -->
+    <div id="details-modal" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm px-4">
+        <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full p-6 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-5 border-b pb-3">
+                <h3 class="text-xl font-bold text-gray-800 logo-font" id="modal-title">Détails de la commande</h3>
+                <button onclick="closeDetailsModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            <div id="modal-content" class="space-y-4 text-gray-600">
+                <!-- Rempli dynamiquement par mon-compte.js -->
+            </div>
+            <div class="mt-6 pt-4 border-t flex justify-end">
+                <button onclick="closeDetailsModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg font-medium transition-colors">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-6 py-10 flex-grow w-full">
+        <!-- En-tête de section et Statut de Synchronisation API -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b pb-4 gap-4">
+            <h1 class="text-3xl font-bold text-gray-800">Mon Compte</h1>
+            <div id="api-status" class="text-sm font-medium text-amber-600 flex items-center gap-2 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200 transition-colors duration-300">
+                <div class="loader" id="api-loader"></div> <span id="api-status-text">Synchronisation en cours...</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+            
+            <!-- COLONNE GAUCHE (5/12) : FORMULAIRE DE PROFIL -->
+            <section class="lg:col-span-5 bg-white border border-gray-150 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-3 text-gray-800 mb-6 border-b pb-3">
+                        <div class="bg-[#9eb2a0] text-white w-8 h-8 rounded-full flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-user-pen text-sm"></i>
+                        </div>
+                        <h2 class="text-xl font-bold">Mes Informations</h2>
+                    </div>
+                    
+                    <form id="profile-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1" for="user-nom">Nom Complet</label>
+                            <input type="text" id="user-nom" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50" required placeholder="Chargement...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1" for="user-email">Adresse Email</label>
+                            <input type="email" id="user-email" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-gray-50 text-gray-500 cursor-not-allowed" readonly placeholder="Chargement...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1" for="user-tel">Téléphone</label>
+                            <input type="tel" id="user-tel" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50" placeholder="Chargement...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1" for="user-adresse">Adresse de livraison</label>
+                            <textarea id="user-adresse" rows="3" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50" placeholder="Chargement..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="mt-6 pt-4 border-t flex justify-end">
+                    <button type="submit" form="profile-form" id="btn-save-profile" class="bg-[#9eb2a0] hover:bg-[#8da390] text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-sm flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> Sauvegarder
+                    </button>
+                </div>
+            </section>
+
+            <!-- COLONNE DROITE (7/12) : COMMANDES ET AVIS -->
+            <section class="lg:col-span-7 flex flex-col gap-8">
+                
+                <!-- HISTORIQUE ET SUIVI DES COMMANDES -->
+                <div class="bg-white border border-gray-150 rounded-2xl p-6 shadow-sm flex-grow">
+                    <div class="flex items-center gap-3 text-gray-800 mb-6 border-b pb-3">
+                        <div class="bg-slate-700 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-clock-rotate-left text-sm"></i>
+                        </div>
+                        <h2 class="text-xl font-bold">Mes Commandes</h2>
+                    </div>
+
+                    <!-- Liste dynamique des commandes passées -->
+                    <div id="order-history-list" class="space-y-4 max-h-[350px] overflow-y-auto pr-2">
+                        <!-- Squelette de chargement en attente de réponse API -->
+                        <div class="animate-pulse flex flex-col space-y-4 py-4">
+                            <div class="h-16 bg-gray-100 rounded-xl w-full"></div>
+                            <div class="h-16 bg-gray-100 rounded-xl w-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AJOUTER UN AVIS -->
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center gap-3 text-amber-900 mb-4 border-b border-amber-200/50 pb-3">
+                        <div class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-star text-sm"></i>
+                        </div>
+                        <h2 class="text-xl font-bold">Laisser un avis</h2>
+                    </div>
+
+                    <form id="review-form" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1" for="review-order-id">Commande concernée</label>
+                                <select id="review-order-id" class="w-full border border-amber-200 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white" required>
+                                    <option value="">Chargement de vos commandes...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Votre note</label>
+                                <div class="flex gap-2 text-2xl text-gray-300 mt-1" id="star-rating-container">
+                                    <i class="fa-solid fa-star cursor-pointer star-btn hover:text-amber-400 transition-colors" data-rating="1"></i>
+                                    <i class="fa-solid fa-star cursor-pointer star-btn hover:text-amber-400 transition-colors" data-rating="2"></i>
+                                    <i class="fa-solid fa-star cursor-pointer star-btn hover:text-amber-400 transition-colors" data-rating="3"></i>
+                                    <i class="fa-solid fa-star cursor-pointer star-btn hover:text-amber-400 transition-colors" data-rating="4"></i>
+                                    <i class="fa-solid fa-star cursor-pointer star-btn hover:text-amber-400 transition-colors" data-rating="5"></i>
+                                </div>
+                                <input type="hidden" id="review-score" value="0" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1" for="review-text">Commentaire</label>
+                            <textarea id="review-text" rows="3" placeholder="Partagez votre expérience gourmande avec nous..." class="w-full border border-amber-200 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white" required></textarea>
+                        </div>
+                        <div class="flex justify-end pt-2">
+                            <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-lg text-sm font-semibold transition-all shadow-sm">
+                                Soumettre mon avis
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- PIED DE PAGE SOMBRE ET ÉLÉGANT -->
+    <footer class="bg-slate-900 text-slate-300 pt-12 pb-6 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <h4 class="text-white font-bold text-lg mb-4 logo-font">Vite & Gourmand</h4>
+                <p class="text-sm leading-relaxed text-slate-400">
+                    Depuis 25 ans, Julie et José mettent leur passion au service de vos événements à Bordeaux. Traiteur de qualité pour tous vos moments gourmands.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold text-lg mb-4">Contact</h4>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-start gap-2.5"><i class="fa-solid fa-map-marker-alt text-[#9eb2a0] mt-1"></i><span>Bordeaux, France</span></li>
+                    <li class="flex items-center gap-2.5"><i class="fa-solid fa-phone text-[#9eb2a0]"></i><span>05 56 XX XX XX</span></li>
+                    <li class="flex items-center gap-2.5"><i class="fa-solid fa-envelope text-[#9eb2a0]"></i><span>contact@vite-gourmand.fr</span></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold text-lg mb-4">Liens utiles</h4>
+                <div class="flex gap-6">
+                    <a href="politique-confidentialite.html" class="hover:text-white transition-colors">Mentions Légales</a>
+                    <a href="cgv.html" class="hover:text-white transition-colors">CGV</a>
+                    <a href="accessibilite.html" class="hover:text-white transition-colors">RGAA</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
+            &copy; 2026 Vite & Gourmand. Tous droits réservés.
+        </div>
+    </footer>
+
+    <!-- Liaison avec ton fichier JavaScript personnalisé -->
+    <script src="mon-compte.js"></script>
+</body>
+</html>

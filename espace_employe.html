@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Employé | Vite & Gourmand</title>
+    
+    <!-- Tailwind CSS pour un design professionnel et responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        h1, h2, h3, .logo-font {
+            font-family: 'Comfortaa', cursive;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- BARRE DE NAVIGATION -->
+    <header class="bg-[#9eb2a0] text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-2 rounded-full">
+                    <i class="fa-solid fa-user-gear text-xl text-white"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-wide logo-font">Vite & <span class="text-yellow-100">Gourmand</span></span>
+                    <p class="text-[10px] uppercase tracking-widest text-emerald-50">Espace Collaborateurs</p>
+                </div>
+            </div>
+            
+            <nav class="flex items-center gap-6">
+                <a href="index.html" class="hover:text-yellow-100 transition-colors flex items-center gap-2 text-sm font-semibold">
+                    <i class="fa-solid fa-house"></i> Retour Accueil
+                </a>
+                <button onclick="deconnecterEmploye()" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-power-off"></i> Déconnexion
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- TOAST DE NOTIFICATION -->
+    <div id="toast" class="fixed top-24 right-6 bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-xl transform translate-x-[150%] transition-transform duration-300 z-50 flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-lg"></i>
+        <span id="toast-message" class="font-medium">Modification enregistrée !</span>
+    </div>
+
+    <!-- MODALE PERSONNALISÉE D'ALERTE (Remplace alert()) -->
+    <div id="custom-alert-modal" class="fixed inset-0 bg-black/60 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm px-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform scale-95 transition-transform duration-300 text-center">
+            <div class="text-amber-500 text-5xl mb-4">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2 logo-font">Notification</h3>
+            <p id="custom-alert-text" class="text-gray-600 mb-6 text-sm whitespace-pre-line"></p>
+            <button onclick="closeCustomAlert()" class="bg-[#9eb2a0] hover:bg-[#8da390] text-white px-6 py-2 rounded-lg font-semibold text-sm transition-colors shadow-sm">
+                Fermer
+            </button>
+        </div>
+    </div>
+
+    <!-- MODALE PERSONNALISÉE DE CONFIRMATION (Remplace confirm()) -->
+    <div id="custom-confirm-modal" class="fixed inset-0 bg-black/60 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm px-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform scale-95 transition-transform duration-300 text-center">
+            <div class="text-[#9eb2a0] text-5xl mb-4">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2 logo-font">Confirmation requise</h3>
+            <p id="custom-confirm-text" class="text-gray-600 mb-6 text-sm"></p>
+            <div class="flex gap-4 justify-center">
+                <button onclick="handleCustomConfirm(false)" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-lg font-medium text-sm transition-colors">
+                    Annuler
+                </button>
+                <button onclick="handleCustomConfirm(true)" class="bg-[#9eb2a0] hover:bg-[#8da390] text-white px-5 py-2 rounded-lg font-semibold text-sm transition-colors shadow-sm">
+                    Confirmer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE D'ANNULATION COMMANDE -->
+    <div id="cancel-modal" class="fixed inset-0 bg-black/60 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm px-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 class="text-lg font-bold text-red-600 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Annulation Commande
+                </h3>
+                <button onclick="closeCancelModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="cancel-form" class="space-y-4">
+                <input type="hidden" id="cancel-order-id">
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1" for="cancel-contact">Mode de contact utilisé</label>
+                    <select id="cancel-contact" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50" required>
+                        <option value="">-- Choisir --</option>
+                        <option value="GSM">Appel GSM (Téléphone)</option>
+                        <option value="Mail">E-mail</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1" for="cancel-reason">Motif de l'annulation</label>
+                    <textarea id="cancel-reason" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 placeholder-gray-400" placeholder="Spécifiez la raison de l'annulation..." required></textarea>
+                </div>
+                
+                <p class="text-[11px] text-gray-500 italic bg-gray-50 p-2.5 rounded-lg border border-gray-150">
+                    Remarque : L'énoncé ECF impose d'avoir contacté préalablement le client par téléphone ou mail avant d'annuler.
+                </p>
+
+                <div class="pt-4 border-t flex gap-3 justify-end">
+                    <button type="button" onclick="closeCancelModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium text-sm transition-colors">Retour</button>
+                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg font-semibold text-sm transition-colors shadow-sm">Confirmer l'annulation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODALE MODIFICATION HORAIRE -->
+    <div id="horaire-modal" class="fixed inset-0 bg-black/60 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm px-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                    <i class="fa-solid fa-clock"></i> Modifier l'Horaire
+                </h3>
+                <button onclick="closeHoraireModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="horaire-form" class="space-y-4">
+                <input type="hidden" id="horaire-id">
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Jour</label>
+                    <input type="text" id="horaire-jour" class="w-full bg-gray-100 border border-gray-200 rounded-lg px-3 py-2 focus:outline-none cursor-not-allowed" readonly>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1" for="horaire-ouverture">Heure d'ouverture</label>
+                        <input type="time" id="horaire-ouverture" class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1" for="horaire-fermeture">Heure de fermeture</label>
+                        <input type="time" id="horaire-fermeture" class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1" for="horaire-statut">Statut de la journée</label>
+                    <select id="horaire-statut" class="w-full border border-gray-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50">
+                        <option value="ouvert">Ouvert</option>
+                        <option value="ferme">Fermé</option>
+                    </select>
+                </div>
+
+                <div class="pt-4 border-t flex gap-3 justify-end">
+                    <button type="button" onclick="closeHoraireModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium text-sm transition-colors">Annuler</button>
+                    <button type="submit" class="bg-[#9eb2a0] hover:bg-[#8da390] text-white px-5 py-2 rounded-lg font-semibold text-sm transition-colors shadow-sm">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SYSTÈME D'ONGLETS POUR L'ESPACE EMPLOYÉ -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 flex gap-6">
+            <button onclick="switchTab('commandes')" id="tab-commandes" class="py-4 px-2 font-semibold text-sm border-b-2 border-[#9eb2a0] text-[#9eb2a0] focus:outline-none flex items-center gap-2 transition-all">
+                <i class="fa-solid fa-boxes-stacked"></i> Commandes
+            </button>
+            <button onclick="switchTab('avis')" id="tab-avis" class="py-4 px-2 font-semibold text-sm border-b-2 border-transparent text-gray-500 hover:text-[#9eb2a0] focus:outline-none flex items-center gap-2 transition-all">
+                <i class="fa-solid fa-star-half-stroke"></i> Modération Avis
+            </button>
+            <button onclick="switchTab('horaires')" id="tab-horaires" class="py-4 px-2 font-semibold text-sm border-b-2 border-transparent text-gray-500 hover:text-[#9eb2a0] focus:outline-none flex items-center gap-2 transition-all">
+                <i class="fa-solid fa-calendar-days"></i> Horaires
+            </button>
+            <button onclick="switchTab('menus')" id="tab-menus" class="py-4 px-2 font-semibold text-sm border-b-2 border-transparent text-gray-500 hover:text-[#9eb2a0] focus:outline-none flex items-center gap-2 transition-all">
+                <i class="fa-solid fa-utensils"></i> Menus & Plats
+            </button>
+        </div>
+    </div>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-6 py-10 flex-grow w-full">
+        
+        <!-- ==========================================
+             ONGLET 1 : GESTION DES COMMANDES
+             ========================================== -->
+        <section id="content-commandes" class="tab-content bg-white border border-gray-150 rounded-2xl p-6 shadow-sm">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="bg-[#9eb2a0] text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-sm">
+                        <i class="fa-solid fa-boxes-stacked text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Gestion des Commandes</h2>
+                        <p class="text-xs text-gray-500">Mettez à jour les étapes et modifiez les statuts en direct.</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <div class="relative flex-grow sm:flex-grow-0">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="text" id="filter-client" placeholder="Rechercher un client..." onkeyup="appliquerFiltres()" class="w-full sm:w-64 pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                    </div>
+                    <select id="filter-statut" onchange="appliquerFiltres()" class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#9eb2a0]/50 transition-all">
+                        <option value="tous">Tous les statuts</option>
+                        <option value="Accepté">Accepté</option>
+                        <option value="En préparation">En préparation</option>
+                        <option value="Livré">Livré</option>
+                        <option value="Annulée">Annulée</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Client / Contact</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Détails Prestation</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">adresse</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">ville</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Statut Actuel</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Action Statut</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Annulation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employe-commandes-list" class="bg-white divide-y divide-gray-150">
+                        <tr>
+                            <td colspan="8" class="px-6 py-10 text-center text-gray-400 italic">Chargement...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             ONGLET 2 : MODÉRATION DES AVIS
+             ========================================== -->
+        <section id="content-avis" class="tab-content bg-white border border-gray-150 rounded-2xl p-6 shadow-sm hidden">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="bg-amber-500 text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-sm">
+                    <i class="fa-solid fa-star-half-stroke text-lg"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Modération des Avis</h2>
+                    <p class="text-xs text-gray-500">Affichez ou rejetez les avis sur la page d'accueil.</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Client</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Note</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Commentaire</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Statut</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employe-avis-list" class="bg-white divide-y divide-gray-150">
+                        <tr>
+                            <td colspan="6" class="px-6 py-10 text-center text-gray-400 italic">Chargement...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             ONGLET 3 : GESTION DES HORAIRES
+             ========================================== -->
+        <section id="content-horaires" class="tab-content bg-white border border-gray-150 rounded-2xl p-6 shadow-sm hidden">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 border-t-4 border-t-sky-500">
+                <h3 class="text-xl font-bold logo-font text-slate-800 mb-2">Horaires d'Ouverture</h3>
+                <p class="text-sm text-slate-500 mb-6">Modifiez les horaires ici pour mettre à jour automatiquement le site client.</p>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm border-collapse">
+                        <thead class="text-slate-600 border-b-2 border-slate-200">
+                            <tr>
+                                <th class="py-3 pr-4">Jour</th>
+                                <th class="py-3 px-2 text-center">Ouvert</th>
+                                <th class="py-3 px-2 text-center">Midi Début</th>
+                                <th class="py-3 px-2 text-center">Midi Fin</th>
+                                <th class="py-3 px-2 text-center">Soir Début</th>
+                                <th class="py-3 px-2 text-center">Soir Fin</th>
+                                <th class="py-3 pl-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <script>
+                                const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+                                jours.forEach((jour, index) => {
+                                    const id = index + 1;
+                                    document.write(`
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="py-3 pr-4 font-semibold text-slate-700">${jour}</td>
+                                            <td class="py-3 px-2 text-center"><input type="checkbox" id="open-${id}" class="w-4 h-4 text-sky-600 rounded focus:ring-sky-500" checked></td>
+                                            <td class="py-3 px-2 text-center"><input type="time" id="md-${id}" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-sky-500 outline-none"></td>
+                                            <td class="py-3 px-2 text-center"><input type="time" id="mf-${id}" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-sky-500 outline-none"></td>
+                                            <td class="py-3 px-2 text-center"><input type="time" id="sd-${id}" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-sky-500 outline-none"></td>
+                                            <td class="py-3 px-2 text-center"><input type="time" id="sf-${id}" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-sky-500 outline-none"></td>
+                                            <td class="py-3 pl-4 text-right"><button onclick="sauvegarderHoraire(${id})" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-1.5 px-3 rounded border border-slate-300 transition-colors">Enregistrer</button></td>
+                                        </tr>
+                                    `);
+                                });
+                            </script>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             ONGLET 4 : GESTION DES MENUS & PLATS
+             ========================================== -->
+        <section id="content-menus" class="tab-content bg-white border border-gray-150 rounded-2xl p-6 shadow-sm hidden">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="bg-[#9eb2a0] text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-sm">
+                        <i class="fa-solid fa-utensils text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Gestion des Menus & Catalogues</h2>
+                        <p class="text-xs text-gray-500">Visualisez les menus disponibles et supprimez-les si nécessaire.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold logo-font text-slate-800">Catalogue des Menus</h2>
+                    <p class="text-sm text-slate-500">Gérez les plats proposés sur le site web.</p>
+                </div>
+                <button id="btn-ouvrir-ajout" onclick="toggleForm('zone-formulaire-employe')" class="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Nouveau Menu
+                </button>
+            </div>
+
+            <div id="zone-formulaire-employe" class="hidden bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-8">
+                <h3 class="text-lg font-bold mb-6 border-b pb-2">Création d'un menu</h3>
+                <form id="add-menu-form" enctype="multipart/form-data" class="space-y-6">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Nom du menu</label>
+                            <input type="text" id="employe-titre" name="nom" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Ex: Prestige de Noël" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Thème</label>
+                            <select id="employe-theme" name="theme" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                <option value="Noel">Noël</option>
+                                <option value="Printemps">Printemps</option>
+                                <option value="Classique">Classique</option>
+                                <option value="Évènement">Évènement</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="col-span-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Régime alimentaire</label>
+                            <select id="employen-regime" name="regime" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm">
+                                <option value="classique">Classique</option>
+                                <option value="vegetarien">Végétarien</option>
+                                <option value="vegan">Vegan</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Prix unitaire (€)</label>
+                            <input type="number" step="0.01" id="employe-prix" name="prix" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Stock disponible</label>
+                            <input type="number" id="employe-stock" name="stock" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm" required>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <h4 class="font-semibold text-sm mb-4">Composition de la carte</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" id="employe-entree" name="entree" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Nom de l'entrée" required>
+                            <input type="text" id="employe-ing-entree" name="ing_entree" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Ingrédients entrée" required>
+                            <input type="text" id="employe-plat" name="plat" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Nom du plat" required>
+                            <input type="text" id="employe-ing-plat" name="ing_plat" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Ingrédients plat" required>
+                            <input type="text" id="employe-dessert" name="dessert" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Nom du dessert" required>
+                            <input type="text" id="employe-ing-dessert" name="ing_dessert" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Ingrédients dessert" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Allergènes</label>
+                        <input type="text" id="employe-allergenes" name="allergenes" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm" placeholder="Ex: Arachides, Gluten...">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Illustration du menu</label>
+                            <input type="file" id="employe-file" name="photo" accept="image/*" onchange="previewImage()" class="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                            <img id="image-preview" src="" alt="Aperçu" class="mt-2 h-20 rounded hidden object-cover">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Description / Conditions</label>
+                            <textarea id="employe-conditions" name="description" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 justify-end border-t pt-4">
+                        <button type="button" onclick="toggleForm('zone-formulaire-employe')" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">Annuler</button>
+                        <button type="submit" class="px-5 py-2 text-sm font-bold text-white bg-slate-800 hover:bg-slate-700 rounded-lg shadow-sm transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Mettre en ligne
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="employe-menus-list">
+                <p class="text-center text-gray-500 italic col-span-full">Chargement des menus...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6">
+            &copy; 2026 Espace Administrateur & Employés | Vite & Gourmand. Certifié conforme aux exigences RNCP.
+        </div>
+    </footer>
+
+    <!-- Liaison avec le fichier JS séparé complet -->
+    <script src="espace-employe.js"></script>
+</body>
+</html>
